@@ -8,15 +8,15 @@ const TaskItemComponent = ({task}) => {
     return (
         <Box margin={5}>
             <Grid container>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Typography variant="subtitle2">Name</Typography>
-                    <Typography> {task.type}</Typography>
+                    <Typography> {task.name}</Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Typography variant="subtitle2">Type</Typography>
                     <Typography>{task.type}</Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Typography variant="subtitle2">Cost</Typography>
                     <Typography>{task.cost}</Typography>
                 </Grid>

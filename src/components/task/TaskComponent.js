@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react'
-import {fetchTasks} from "../redux/task/taskAction";
+import {fetchTasks} from "../../redux/task/taskAction";
 import {useDispatch, useSelector} from "react-redux";
 import TaskItemComponent from "./TaskItemComponent";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import {useForm, Controller} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
-import {submitTask} from "../redux";
+import {submitTask} from "../../redux";
 
 const TaskComponent = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const TaskComponent = () => {
 
     useEffect(() => {
         dispatch(fetchTasks())
-    }, []);
+    },[]);
 
     const onSubmit = data => {
         const formData = {

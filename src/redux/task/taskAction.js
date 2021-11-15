@@ -2,18 +2,27 @@ import axios from 'axios'
 import {
     FETCH_TASKS_FAILURE,
     FETCH_TASKS_REQUEST,
-    FETCH_TASKS_SUCCESS, SUBMIT_TASK_FAILURE,
+    FETCH_TASKS_SUCCESS,
+    SUBMIT_TASK_FAILURE,
     SUBMIT_TASK_REQUEST,
     SUBMIT_TASK_SUCCESS
 } from "./taskTypes";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
+const token = localStorage.getItem('accessToken');
+
+if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 const fetchTasks = () => {
+
     return (dispatch) => {
         dispatch(fetchTasksRequest());
+
         axios
-            .get(SERVER_URL + '/tasks')
+            .get(SERVER_URL + '/user/tasks')
             .then(response => {
                 const tasks = response.data;
                 dispatch(fetchTasksSuccess(tasks))
@@ -27,8 +36,9 @@ const fetchTasks = () => {
 const submitTask = ({formData}) => {
     return (dispatch) => {
         dispatch(submitTaskRequest(formData));
+
         axios
-            .post(SERVER_URL + '/tasks', formData)
+            .post(SERVER_URL + '/user/tasks', formData)
             .then(response => {
                 const tasks = response.data;
                 dispatch(submitTaskSuccess(tasks))
