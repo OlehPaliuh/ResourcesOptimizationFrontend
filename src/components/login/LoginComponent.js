@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
-import createTheme from "@material-ui/core/styles/createTheme";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Alert from "@material-ui/lab/Alert";
 
@@ -44,7 +43,6 @@ const LoginComponent = () => {
     const navigate = useNavigate();
     const {control, handleSubmit} = useForm();
     const {currentUser, error} = useSelector((state) => state.currentUser);
-    const theme = createTheme();
 
     const onSubmit = data => {
         const formData = {
@@ -77,7 +75,7 @@ const LoginComponent = () => {
 
                 <Grid container>
                     <Grid item xs>
-                        {error && <Alert severity="error">{error?.message}</Alert>}
+                        {error && <Alert severity="error">{error.message}</Alert>}
                     </Grid>
                 </Grid>
 

@@ -10,12 +10,11 @@ import Link from "@material-ui/core/Link";
 import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import createTheme from "@material-ui/core/styles/createTheme";
 import {useDispatch, useSelector} from "react-redux";
-import {authenticate, register} from "../../redux";
+import {register} from "../../redux";
 import {useNavigate} from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     appBar: {
         top: "auto",
         bottom: 0
@@ -64,7 +63,7 @@ const RegisterComponent = () => {
 
                 <Grid container>
                     <Grid item xs>
-                        {error && <Alert severity="error">{error?.message}</Alert>}
+                        {error && <Alert severity="error">{error.message}</Alert>}
                     </Grid>
                 </Grid>
 

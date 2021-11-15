@@ -2,17 +2,13 @@ import React from 'react'
 import Box from "@material-ui/core/Box";
 import '@fontsource/roboto';
 import {useNavigate} from "react-router";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Switch from "@material-ui/core/Switch";
 import {AccountCircle} from "@material-ui/icons";
-import Grid from "@material-ui/core/Grid";
 
 const NavBarComponent = () => {
 
