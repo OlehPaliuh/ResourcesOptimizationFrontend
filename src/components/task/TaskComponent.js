@@ -37,7 +37,6 @@ const TaskComponent = () => {
                 <Typography variant="subtitle2">{taskData.error}</Typography>
             ) : (
                 <Box>
-
                     <Grid container>
                         <Grid item xs={4}>
                             <Typography variant="subtitle1">Task List</Typography>
@@ -48,7 +47,7 @@ const TaskComponent = () => {
                         </Grid>
                     </Grid>
                     {taskData && taskData.tasks && taskData.tasks.length > 0 &&
-                    taskData.tasks.map(task => <TaskItemComponent key={task.id} task={task}/>)
+                    taskData.tasks.map(task => <TaskItemComponent index = {task.id} key={task.id} task={task}/>)
                     }
                 </Box>
             )

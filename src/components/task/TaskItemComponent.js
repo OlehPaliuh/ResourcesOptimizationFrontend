@@ -3,7 +3,9 @@ import {Grid, Typography} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import '@fontsource/roboto';
 
-const TaskItemComponent = ({task}) => {
+const TaskItemComponent = ({task, index}) => {
+
+    console.log(index);
 
     return (
         <Box margin={5}>
