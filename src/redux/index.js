@@ -1,2 +1,2 @@
-export * from './task/taskAction'
+export * from './task/fetch/fetchAction'
 export * from './user/userAction'

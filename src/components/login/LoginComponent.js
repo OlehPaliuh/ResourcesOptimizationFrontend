@@ -42,19 +42,19 @@ const LoginComponent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {control, handleSubmit} = useForm();
-    const {currentUser, error} = useSelector((state) => state.currentUser);
+    const {error, loading} = useSelector((state) => state.currentUser);
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         const formData = {
             username: data.username,
             password: data.password
         };
 
-        dispatch(authenticate({formData}));
+        await dispatch(authenticate({formData}));
 
         const accessToken = localStorage.getItem('accessToken');
 
-        if (currentUser || accessToken) {
+        if (!loading && accessToken) {
             navigate("/dashboard");
         }
     };
@@ -144,4 +144,4 @@ const LoginComponent = () => {
     );
 };
 
-export default LoginComponent;
+export {LoginComponent , Copyright};

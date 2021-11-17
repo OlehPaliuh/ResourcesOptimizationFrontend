@@ -5,21 +5,22 @@ import {
     REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS
 } from "./userTypes";
 
-const initialState = {loading: false, currentUser: null, error: ''};
+const initialState = {loading: false, currentUser: null, error: null};
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case AUTHENTICATE_USER_REQUEST:
             return {
                 ...state,
                 loading: true,
-                currentUser: null
+                currentUser: null,
+                error: null
             };
         case AUTHENTICATE_USER_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 currentUser: action.payload,
-                error: ''
+                error: null
             };
         case AUTHENTICATE_USER_FAILURE:
             return {
@@ -31,18 +32,19 @@ const reducer = (state = initialState, action) => {
         case REGISTER_USER_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: null
             };
         case REGISTER_USER_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                error: ''
+                error: null
             };
         case REGISTER_USER_FAILURE:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 error: action.payload
             };
         default:

@@ -13,6 +13,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../../redux";
 import {useNavigate} from "react-router-dom";
+import {Copyright} from "../login/LoginComponent";
+
 
 const useStyles = makeStyles(() => ({
     appBar: {
@@ -29,11 +31,11 @@ const RegisterComponent = () => {
     const {control, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {error} = useSelector((state) => state.currentUser);
+    const {error, loading} = useSelector((state) => state.currentUser);
 
     const classes = useStyles();
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         const formData = {
             username: data.username,
             password: data.password,
@@ -43,9 +45,9 @@ const RegisterComponent = () => {
             phoneNumber: data.phoneNumber
         };
 
-        dispatch(register({formData}));
+        await dispatch(register({formData}));
 
-        if (!error) {
+        if (!loading && !error) {
             navigate("/login");
         }
     };
@@ -213,7 +215,7 @@ const RegisterComponent = () => {
                         </Link>
                     </Grid>
                 </Grid>
-                {/*<Copyright sx={{mt: 8, mb: 4}}/>*/}
+                <Copyright sx={{mt: 8, mb: 4}}/>
             </form>
         </Box>
     );

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {fetchTasks} from "../../redux/task/taskAction";
+import {fetchTasks, submitTask} from "../../redux/task/fetch/fetchAction";
 import {useDispatch, useSelector} from "react-redux";
 import TaskItemComponent from "./TaskItemComponent";
 import Box from "@material-ui/core/Box";
@@ -8,16 +8,21 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
-import {submitTask} from "../../redux";
 
 const TaskComponent = () => {
     const dispatch = useDispatch();
-    const taskData = useSelector((state) => state.task);
+    const {tasks, error, loading} = useSelector((state) => state.task);
     const {control, handleSubmit} = useForm();
 
     useEffect(() => {
         dispatch(fetchTasks())
-    },[]);
+    }, []);
+
+    const deleteTaskFromArray = index => {
+        tasks.splice(index, 1);
+    };
+
+    console.log('taskData ', tasks);
 
     const onSubmit = data => {
         const formData = {
@@ -31,10 +36,10 @@ const TaskComponent = () => {
 
     return (
         <Box margin={2}>
-            {taskData.loading ? (
+            {loading ? (
                 <Typography variant="subtitle2">Loading</Typography>
-            ) : taskData.error ? (
-                <Typography variant="subtitle2">{taskData.error}</Typography>
+            ) : error ? (
+                <Typography variant="subtitle2">{error}</Typography>
             ) : (
                 <Box>
                     <Grid container>
@@ -46,8 +51,8 @@ const TaskComponent = () => {
                                 Task </Button>
                         </Grid>
                     </Grid>
-                    {taskData && taskData.tasks && taskData.tasks.length > 0 &&
-                    taskData.tasks.map(task => <TaskItemComponent index = {task.id} key={task.id} task={task}/>)
+                    {tasks && tasks.length > 0 &&
+                    tasks.map(task => <TaskItemComponent index={task.id} key={task.id} task={task} deleteTaskFromArray={deleteTaskFromArray}/>)
                     }
                 </Box>
             )

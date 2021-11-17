@@ -2,22 +2,22 @@ import axios from 'axios'
 import {
     AUTHENTICATE_USER_FAILURE,
     AUTHENTICATE_USER_REQUEST,
-    AUTHENTICATE_USER_SUCCESS, REGISTER_USER_FAILURE,
-    REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS
+    AUTHENTICATE_USER_SUCCESS,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS
 } from "./userTypes";
 import React from "react";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const authenticate = ({formData}) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(authenticateRequest(formData));
-        axios
-            .post(SERVER_URL + '/authenticate', formData, {headers: {authenticate: null}})
+        await axios
+            .post(SERVER_URL + '/authenticate', formData, {headers: {Authorization: null}})
             .then(response => {
                 const currentUser = response.data;
-
-                console.log(currentUser);
 
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
@@ -31,22 +31,24 @@ const authenticate = ({formData}) => {
     }
 };
 
-const register= ({formData}) => {
-    return (dispatch) => {
+const register = ({formData}) => {
+    return async dispatch => {
         dispatch(registerRequest(formData));
-        axios
-            .post(SERVER_URL + '/register', formData, {headers: {authenticate: null}})
-            .then(response => {
-                console.log(response.data);
-
-                dispatch(registerSuccess());
-            })
-            .catch(error => {
-                dispatch(registerFailure(error.response.data))
-            });
+        try {
+            await axios
+                .post(SERVER_URL + '/register', formData, {headers: {Authorization: null}})
+                .then(response => {
+                    dispatch(registerSuccess());
+                })
+                .catch(error => {
+                    dispatch(registerFailure(error))
+                });
+        } catch
+            (error) {
+            dispatch(registerFailure(error))
+        }
     }
 };
-
 
 const authenticateRequest = () => {
     return {

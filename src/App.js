@@ -3,7 +3,7 @@ import React from "react";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginComponent from "./components/login/LoginComponent";
+import {LoginComponent} from "./components/login/LoginComponent";
 import HomeComponent from "./components/home/HomeComponent";
 import TaskComponent from "./components/task/TaskComponent";
 import RequireAuth from "./components/login/RequireAuth";

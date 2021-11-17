@@ -6,17 +6,15 @@ import {
     SUBMIT_TASK_FAILURE,
     SUBMIT_TASK_REQUEST,
     SUBMIT_TASK_SUCCESS
-} from "./taskTypes";
+} from "./fetchTypes";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-const token = localStorage.getItem('accessToken');
-
-if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
 const fetchTasks = () => {
+
+    const token = localStorage.getItem('accessToken');
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     return (dispatch) => {
         dispatch(fetchTasksRequest());
@@ -55,9 +53,10 @@ const fetchTasksRequest = () => {
     }
 };
 
-const submitTaskRequest = () => {
+const fetchTasksFailure = error => {
     return {
-        type: SUBMIT_TASK_REQUEST
+        type: FETCH_TASKS_FAILURE,
+        payload: error
     }
 };
 
@@ -65,6 +64,12 @@ const fetchTasksSuccess = tasks => {
     return {
         type: FETCH_TASKS_SUCCESS,
         payload: tasks
+    }
+};
+
+const submitTaskRequest = () => {
+    return {
+        type: SUBMIT_TASK_REQUEST
     }
 };
 
@@ -78,14 +83,6 @@ const submitTaskSuccess = tasks => {
 const submitTaskFailure = error => {
     return {
         type: SUBMIT_TASK_FAILURE,
-        payload: error
-    }
-};
-
-
-const fetchTasksFailure = error => {
-    return {
-        type: FETCH_TASKS_FAILURE,
         payload: error
     }
 };
