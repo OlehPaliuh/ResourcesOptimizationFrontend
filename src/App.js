@@ -13,6 +13,7 @@ import DashboardComponent from "./components/dashboard/DashboardComponent";
 import MenuAppBar from "./components/nav-bar/MenuAppBar";
 import { useTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles'
+import ProjectPage from "./pages/project/ProjectPage";
 
 const App = () => {
     const theme = useTheme();
@@ -49,6 +50,16 @@ const App = () => {
                                 <RequireAuth>
                                     <MenuAppBar/>
                                     <ProfileComponent/>
+                                </RequireAuth>
+                            }
+                        />
+
+                        <Route
+                            path="/projects"
+                            element={
+                                <RequireAuth>
+                                    <MenuAppBar/>
+                                    <ProjectPage/>
                                 </RequireAuth>
                             }
                         />
