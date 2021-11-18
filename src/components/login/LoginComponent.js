@@ -1,20 +1,21 @@
 import React from 'react'
-import {Grid, TextField} from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import '@fontsource/roboto';
 import {Controller, useForm} from "react-hook-form";
 import {authenticate} from "../../redux/user/userAction";
 import {useDispatch, useSelector} from "react-redux";
-import Button from "@material-ui/core/Button";
 import {useNavigate} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Alert from "@material-ui/lab/Alert";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import makeStyles from "@mui/styles/makeStyles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     appBar: {
         top: "auto",
         bottom: 0

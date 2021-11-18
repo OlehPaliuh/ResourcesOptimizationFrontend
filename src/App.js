@@ -7,15 +7,15 @@ import {LoginComponent} from "./components/login/LoginComponent";
 import HomeComponent from "./components/home/HomeComponent";
 import TaskComponent from "./components/task/TaskComponent";
 import RequireAuth from "./components/login/RequireAuth";
-import NavBarComponent from "./components/nav-bar/NavBarComponent";
 import RegisterComponent from "./components/register/RegisterComponent";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import createTheme from "@material-ui/core/styles/createTheme";
 import ProfileComponent from "./components/profile/ProfileComponent";
-
+import DashboardComponent from "./components/dashboard/DashboardComponent";
+import MenuAppBar from "./components/nav-bar/MenuAppBar";
+import { useTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles'
 
 const App = () => {
-    const theme = createTheme();
+    const theme = useTheme();
 
     return (
         <Provider store={store}>
@@ -29,7 +29,16 @@ const App = () => {
                             path="/dashboard"
                             element={
                                 <RequireAuth>
-                                    <NavBarComponent/>
+                                    <MenuAppBar/>
+                                    <DashboardComponent/>
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/tasks"
+                            element={
+                                <RequireAuth>
+                                    <MenuAppBar/>
                                     <TaskComponent/>
                                 </RequireAuth>
                             }
@@ -38,7 +47,7 @@ const App = () => {
                             path="/profile"
                             element={
                                 <RequireAuth>
-                                    <NavBarComponent/>
+                                    <MenuAppBar/>
                                     <ProfileComponent/>
                                 </RequireAuth>
                             }

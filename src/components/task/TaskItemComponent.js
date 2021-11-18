@@ -1,23 +1,19 @@
 import React from 'react'
-import {Grid, Typography} from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import '@fontsource/roboto';
 import {useDispatch, useSelector} from "react-redux";
-import Button from "@material-ui/core/Button";
 import {removeTask} from "../../redux/task/remove/removeAction";
 import {fetchTasks} from "../../redux/task/fetch/fetchAction";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const TaskItemComponent = ({task, index}) => {
     const dispatch = useDispatch();
     const {error, loading} = useSelector((state) => state.removedTask);
-    const testData = useSelector((state) => state.removedTask);
 
     const deleteTask = async () => {
         await dispatch(removeTask(index));
-
-        console.log('loading ', loading);
-        console.log('error ', error);
-        console.log('TestData ', testData);
 
         if (!loading && !error) {
             dispatch(fetchTasks());

@@ -2,12 +2,12 @@ import React, {useEffect} from 'react'
 import {fetchTasks, submitTask} from "../../redux/task/fetch/fetchAction";
 import {useDispatch, useSelector} from "react-redux";
 import TaskItemComponent from "./TaskItemComponent";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import {Controller, useForm} from "react-hook-form";
-import TextField from "@material-ui/core/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 const TaskComponent = () => {
     const dispatch = useDispatch();
@@ -21,8 +21,6 @@ const TaskComponent = () => {
     const deleteTaskFromArray = index => {
         tasks.splice(index, 1);
     };
-
-    console.log('taskData ', tasks);
 
     const onSubmit = data => {
         const formData = {
