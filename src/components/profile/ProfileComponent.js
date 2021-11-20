@@ -20,7 +20,6 @@ const ProfileComponent = () => {
                         Tasks
                     </Button>
                 </Grid>
-
             </Grid>
         </Box>
     );

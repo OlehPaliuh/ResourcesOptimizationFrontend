@@ -5,19 +5,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 const ProjectItemComponent = ({project, index}) => {
-    // const dispatch = useDispatch();
-    // const {error, loading} = useSelector((state) => state.removedTask);
-    //
-    // const deleteTask = async () => {
-    //     await dispatch(removeTask(index));
-    //
-    //     if (!loading && !error) {
-    //         dispatch(fetchTasks());
-    //     }
-    // };
-
-
-    console.log(project);
     return (
         <Box margin={5}>
             <Grid container>

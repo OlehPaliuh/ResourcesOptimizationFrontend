@@ -1,5 +1,10 @@
 import axios from 'axios'
-import {FETCH_PROJECT_FAILURE, FETCH_PROJECT_SUCCESS, FETCH_PROJECTS_REQUEST} from "./fetchProjectTypes";
+import {
+    FETCH_PROJECT_FAILURE,
+    FETCH_PROJECT_SUCCESS,
+    FETCH_PROJECTS_REQUEST, SUBMIT_PROJECT_FAILURE,
+    SUBMIT_PROJECT_REQUEST, SUBMIT_PROJECT_SUCCESS
+} from "./fetchProjectTypes";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -44,4 +49,40 @@ const fetchProjectsSuccess = projects => {
     }
 };
 
-export {fetchProjects, fetchProjectsRequest, fetchProjectsFailure, fetchProjectsSuccess}
+const submitProject = ({formData}) => {
+    return (dispatch) => {
+        dispatch(submitTaskRequest(formData));
+
+        axios
+            .post(SERVER_URL + '/user/projects', formData)
+            .then(response => {
+                const project = response.data;
+                dispatch(submitTaskSuccess(project))
+            })
+            .catch(error => {
+                dispatch(submitTaskFailure(error.message))
+            })
+    }
+};
+
+const submitTaskRequest = () => {
+    return {
+        type: SUBMIT_PROJECT_REQUEST
+    }
+};
+
+const submitTaskSuccess = project => {
+    return {
+        type: SUBMIT_PROJECT_SUCCESS,
+        payload: project
+    }
+};
+
+const submitTaskFailure = error => {
+    return {
+        type: SUBMIT_PROJECT_FAILURE,
+        payload: error
+    }
+};
+
+export {fetchProjects, fetchProjectsRequest, fetchProjectsFailure, fetchProjectsSuccess, submitProject}

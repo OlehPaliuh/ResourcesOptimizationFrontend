@@ -6,14 +6,16 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {LoginComponent} from "./components/login/LoginComponent";
 import HomeComponent from "./components/home/HomeComponent";
 import TaskComponent from "./components/task/TaskComponent";
-import RequireAuth from "./components/login/RequireAuth";
 import RegisterComponent from "./components/register/RegisterComponent";
 import ProfileComponent from "./components/profile/ProfileComponent";
 import DashboardComponent from "./components/dashboard/DashboardComponent";
-import MenuAppBar from "./components/nav-bar/MenuAppBar";
-import { useTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles'
+import {ThemeProvider, useTheme} from '@mui/material/styles';
 import ProjectPage from "./pages/project/ProjectPage";
+import ProjectDetailsPage from "./pages/project/details/ProjectDetailsPage";
+import TaskDetailsComponent from "./components/task/TaskDetails";
+import AuthComponent from "./components/AuthComponent";
+import SupportPage from "./pages/support/SupportPage";
+
 
 const App = () => {
     const theme = useTheme();
@@ -28,40 +30,31 @@ const App = () => {
                         <Route path="/login" element={<LoginComponent/>}/>
                         <Route
                             path="/dashboard"
-                            element={
-                                <RequireAuth>
-                                    <MenuAppBar/>
-                                    <DashboardComponent/>
-                                </RequireAuth>
-                            }
+                            element={<AuthComponent childComponent={<DashboardComponent/>}/>}
                         />
                         <Route
                             path="/tasks"
-                            element={
-                                <RequireAuth>
-                                    <MenuAppBar/>
-                                    <TaskComponent/>
-                                </RequireAuth>
-                            }
+                            element={<AuthComponent childComponent={<TaskComponent/>}/>}
+                        />
+                        <Route
+                            path="/tasks/:id"
+                            element={<AuthComponent childComponent={<TaskDetailsComponent/>}/>}
                         />
                         <Route
                             path="/profile"
-                            element={
-                                <RequireAuth>
-                                    <MenuAppBar/>
-                                    <ProfileComponent/>
-                                </RequireAuth>
-                            }
+                            element={<AuthComponent childComponent={<ProfileComponent/>}/>}
                         />
-
                         <Route
                             path="/projects"
-                            element={
-                                <RequireAuth>
-                                    <MenuAppBar/>
-                                    <ProjectPage/>
-                                </RequireAuth>
-                            }
+                            element={<AuthComponent childComponent={<ProjectPage/>}/>}
+                        />
+                        <Route
+                            path="/projects/:id"
+                            element={<AuthComponent childComponent={<ProjectDetailsPage/>}/>}
+                        />
+                        <Route
+                            path="/support"
+                            element={<AuthComponent childComponent={<SupportPage/>}/>}
                         />
                     </Routes>
                 </BrowserRouter>

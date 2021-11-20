@@ -7,9 +7,11 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import {useNavigate} from 'react-router-dom';
 
 const TaskItemComponent = ({task, index}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {error, loading} = useSelector((state) => state.removedTask);
 
     const deleteTask = async () => {
@@ -23,17 +25,25 @@ const TaskItemComponent = ({task, index}) => {
     return (
         <Box margin={5}>
             <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <Typography variant="subtitle2">Name</Typography>
                     <Typography> {task.name}</Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <Typography variant="subtitle2">Type</Typography>
                     <Typography>{task.type}</Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <Typography variant="subtitle2">Cost</Typography>
                     <Typography>{task.cost}</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                    <Typography variant="subtitle2">Min Cost</Typography>
+                    <Typography>{task.minimumImplementationCost}</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                    <Typography variant="subtitle2">Max Cost</Typography>
+                    <Typography>{task.maximumImplementationCost}</Typography>
                 </Grid>
                 <Grid item xs={1}>
                     <Button
@@ -42,6 +52,16 @@ const TaskItemComponent = ({task, index}) => {
                         onClick={deleteTask}
                         color="secondary">
                         Remove
+                    </Button>
+                </Grid>
+
+                <Grid item xs={1}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={() => navigate(`/tasks/${index}`)}
+                        color="secondary">
+                        Details
                     </Button>
                 </Grid>
             </Grid>

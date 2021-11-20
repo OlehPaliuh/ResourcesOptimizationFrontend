@@ -22,13 +22,7 @@ const TaskComponent = () => {
         tasks.splice(index, 1);
     };
 
-    const onSubmit = data => {
-        const formData = {
-            name: data.name,
-            type: data.type,
-            cost: data.cost
-        };
-
+    const onSubmit = formData => {
         dispatch(submitTask({formData}));
     };
 
@@ -50,7 +44,8 @@ const TaskComponent = () => {
                         </Grid>
                     </Grid>
                     {tasks && tasks.length > 0 &&
-                    tasks.map(task => <TaskItemComponent index={task.id} key={task.id} task={task} deleteTaskFromArray={deleteTaskFromArray}/>)
+                    tasks.map(task => <TaskItemComponent index={task.id} key={task.id} task={task}
+                                                         deleteTaskFromArray={deleteTaskFromArray}/>)
                     }
                 </Box>
             )
@@ -58,7 +53,7 @@ const TaskComponent = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <Controller
                             name="name"
                             control={control}
@@ -75,7 +70,7 @@ const TaskComponent = () => {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <Controller
                             name="type"
                             control={control}
@@ -93,7 +88,7 @@ const TaskComponent = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <Controller
                             name="cost"
                             control={control}
@@ -110,7 +105,44 @@ const TaskComponent = () => {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+
+                    <Grid item xs={2}>
+                        <Controller
+                            name="minimumImplementationCost"
+                            control={control}
+                            defaultValue=""
+                            rules={{required: 'Cost required'}}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    label="Min Cost"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                />
+                            )}
+                        />
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <Controller
+                            name="maximumImplementationCost"
+                            control={control}
+                            defaultValue=""
+                            rules={{required: 'Cost required'}}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <TextField
+                                    label="Max Cost"
+                                    value={value}
+                                    onChange={onChange}
+                                    error={!!error}
+                                    helperText={error ? error.message : null}
+                                />
+                            )}
+                        />
+                    </Grid>
+
+                    <Grid item xs={2}>
                         <Button type="submit" variant="contained" color="primary"> Submit</Button>
                     </Grid>
                 </Grid>
