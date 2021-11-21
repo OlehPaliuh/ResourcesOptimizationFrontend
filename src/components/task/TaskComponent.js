@@ -8,11 +8,39 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import makeStyles from "@mui/styles/makeStyles";
+
+const phaseTypes = [
+    'ANALYSIS',
+    'DESIGN',
+    'DEVELOPMENT',
+    'TESTING',
+    'DEPLOYMENT',
+    'MAINTENANCE'
+];
+
+const prepareType = (s) => {
+    if (typeof s !== 'string') return '';
+    s = s.toLowerCase();
+    return s.charAt(0).toUpperCase() + s.slice(1)
+};
+
+const useStyles = makeStyles(() => ({
+    formControl: {
+        minWidth: 120,
+    },
+}));
 
 const TaskComponent = () => {
     const dispatch = useDispatch();
     const {tasks, error, loading} = useSelector((state) => state.task);
     const {control, handleSubmit} = useForm();
+
+    const classes = useStyles();
 
     useEffect(() => {
         dispatch(fetchTasks())
@@ -23,26 +51,33 @@ const TaskComponent = () => {
     };
 
     const onSubmit = formData => {
+        console.log('formData ',formData);
+
+        formData = {
+            ...formData,
+            type: formData.type.toUpperCase()
+        };
+
+        console.log('formData modif ',formData);
+
         dispatch(submitTask({formData}));
     };
 
     return (
-        <Box margin={2}>
+        <Box padding={3}>
+            <Box pb={2}
+                 display="flex"
+                 alignItems="center"
+                 justifyContent="center">
+                <Typography variant="h5">Tasks</Typography>
+            </Box>
+
             {loading ? (
                 <Typography variant="subtitle2">Loading</Typography>
             ) : error ? (
                 <Typography variant="subtitle2">{error}</Typography>
             ) : (
                 <Box>
-                    <Grid container>
-                        <Grid item xs={4}>
-                            <Typography variant="subtitle1">Task List</Typography>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Button variant="contained" color="primary" onClick={() => console.log('click')}>Create
-                                Task </Button>
-                        </Grid>
-                    </Grid>
                     {tasks && tasks.length > 0 &&
                     tasks.map(task => <TaskItemComponent index={task.id} key={task.id} task={task}
                                                          deleteTaskFromArray={deleteTaskFromArray}/>)
@@ -52,7 +87,7 @@ const TaskComponent = () => {
             }
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container>
+                <Grid container spacing={4}>
                     <Grid item xs={2}>
                         <Controller
                             name="name"
@@ -70,41 +105,70 @@ const TaskComponent = () => {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={2}>
-                        <Controller
-                            name="type"
-                            control={control}
-                            defaultValue=""
-                            rules={{required: 'Type required'}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField
-                                    label="Type"
-                                    value={value}
-                                    onChange={onChange}
-                                    error={!!error}
-                                    helperText={error ? error.message : null}
-                                />
-                            )}
-                        />
-                    </Grid>
 
                     <Grid item xs={2}>
-                        <Controller
-                            name="cost"
-                            control={control}
-                            defaultValue=""
-                            rules={{required: 'Cost required'}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField
-                                    label="Cost"
-                                    value={value}
-                                    onChange={onChange}
-                                    error={!!error}
-                                    helperText={error ? error.message : null}
-                                />
-                            )}
-                        />
+                        <FormControl name='type' fullWidth>
+                            <InputLabel id="type-label">Type</InputLabel>
+                            <Controller
+                                name="type"
+                                control={control}
+                                defaultValue={phaseTypes[0]}
+                                rules={{required: 'Type required'}}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <Select
+                                        label='Type'
+                                        value={value}
+                                        onChange={onChange}
+                                        className={classes.formControl}
+                                        error={!!error}
+                                        helperText={error ? error.message : null}
+                                    >
+                                        {phaseTypes.map(item => <MenuItem key={item}
+                                                                          value={item}>{prepareType(item)}</MenuItem>)}
+                                    </Select>
+                                )}
+                            />
+                        </FormControl>
                     </Grid>
+
+                    {/*<Grid item xs={2}>*/}
+                    {/*    <Controller*/}
+                    {/*        name="type"*/}
+                    {/*        control={control}*/}
+                    {/*        defaultValue={prepareType(phaseTypes[0])}*/}
+                    {/*        rules={{required: 'Type required'}}*/}
+                    {/*        render={({field: {onChange, value}, fieldState: {error}}) => (*/}
+                    {/*            <Select*/}
+                    {/*                value={value}*/}
+                    {/*                onChange={onChange}*/}
+                    {/*                className={classes.formControl}*/}
+                    {/*                error={!!error}*/}
+                    {/*                helperText={error ? error.message : null}*/}
+                    {/*            >*/}
+                    {/*                {phaseTypes.map(item => <MenuItem key={item}*/}
+                    {/*                                                  value={item}>{prepareType(item)}</MenuItem>)}*/}
+                    {/*            </Select>*/}
+                    {/*        )}*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
+
+                    {/*<Grid item xs={2}>*/}
+                    {/*    <Controller*/}
+                    {/*        name="type"*/}
+                    {/*        control={control}*/}
+                    {/*        defaultValue=""*/}
+                    {/*        rules={{required: 'Type required'}}*/}
+                    {/*        render={({field: {onChange, value}, fieldState: {error}}) => (*/}
+                    {/*            <TextField*/}
+                    {/*                label="Type"*/}
+                    {/*                value={value}*/}
+                    {/*                onChange={onChange}*/}
+                    {/*                error={!!error}*/}
+                    {/*                helperText={error ? error.message : null}*/}
+                    {/*            />*/}
+                    {/*        )}*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
 
                     <Grid item xs={2}>
                         <Controller
@@ -150,4 +214,4 @@ const TaskComponent = () => {
         </Box>
     );
 };
-export default TaskComponent
+export {TaskComponent, prepareType}

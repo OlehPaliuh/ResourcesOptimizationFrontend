@@ -25,6 +25,8 @@ const SelectTaskComponent = ({checked, index, task, appendTask, removeTask}) => 
         <MenuItem key={task.id} index={task.id} value={task}>
             <Checkbox checked={checked} onChange={handleCheckboxChanged}/>
             <ListItemText primary={task.name}/>
+            <ListItemText primary={`Min Cost: ${task.minimumImplementationCost}`}/>
+            <ListItemText primary={`Max Cost: ${task.maximumImplementationCost}`}/>
         </MenuItem>
     );
 };
@@ -105,4 +107,4 @@ const CreateProjectComponent = () => {
     )
 };
 
-export default CreateProjectComponent;
+export {CreateProjectComponent, SelectTaskComponent};

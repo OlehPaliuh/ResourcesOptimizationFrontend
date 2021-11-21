@@ -13,7 +13,7 @@ import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
-import CreateProjectComponent from "../../components/project/CreateProjectComponent";
+import {CreateProjectComponent} from "../../components/project/CreateProjectComponent";
 
 const ProjectPage = () => {
     const dispatch = useDispatch();
@@ -37,12 +37,15 @@ const ProjectPage = () => {
                 <Typography variant="subtitle2">{error}</Typography>
             ) : (
                 <Box>
+                    <Box pb={4}
+                         display="flex"
+                         alignItems="center"
+                         justifyContent="center">
+                        <Typography variant="h5">Projects</Typography>
+                    </Box>
                     <Grid container>
-                        <Grid item xs={4}>
-                            <Typography variant="subtitle1">Projects</Typography>
-                        </Grid>
                         {!createForm ? (
-                            <Grid item xs={4}>
+                            <Grid item xs={4} pb={5}>
                                 <Button variant="contained" color="primary" onClick={handleCreateProjectClicked}>
                                     Create Project
                                 </Button>

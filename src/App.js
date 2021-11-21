@@ -5,7 +5,7 @@ import store from "./redux/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {LoginComponent} from "./components/login/LoginComponent";
 import HomeComponent from "./components/home/HomeComponent";
-import TaskComponent from "./components/task/TaskComponent";
+import {TaskComponent} from "./components/task/TaskComponent";
 import RegisterComponent from "./components/register/RegisterComponent";
 import ProfileComponent from "./components/profile/ProfileComponent";
 import DashboardComponent from "./components/dashboard/DashboardComponent";
@@ -15,7 +15,7 @@ import ProjectDetailsPage from "./pages/project/details/ProjectDetailsPage";
 import TaskDetailsComponent from "./components/task/TaskDetails";
 import AuthComponent from "./components/AuthComponent";
 import SupportPage from "./pages/support/SupportPage";
-
+import ProjectEditPage from "./pages/project/edit/ProjectEditPage";
 
 const App = () => {
     const theme = useTheme();
@@ -47,6 +47,10 @@ const App = () => {
                         <Route
                             path="/projects"
                             element={<AuthComponent childComponent={<ProjectPage/>}/>}
+                        />
+                        <Route
+                            path="/projects/:id/edit"
+                            element={<AuthComponent childComponent={<ProjectEditPage/>}/>}
                         />
                         <Route
                             path="/projects/:id"

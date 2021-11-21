@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {useNavigate} from 'react-router-dom';
+import {prepareType} from "./TaskComponent";
 
 const TaskItemComponent = ({task, index}) => {
     const dispatch = useDispatch();
@@ -24,18 +25,14 @@ const TaskItemComponent = ({task, index}) => {
 
     return (
         <Box margin={5}>
-            <Grid container>
+            <Grid container justifyContent="space-between">
                 <Grid item xs={2}>
                     <Typography variant="subtitle2">Name</Typography>
                     <Typography> {task.name}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                     <Typography variant="subtitle2">Type</Typography>
-                    <Typography>{task.type}</Typography>
-                </Grid>
-                <Grid item xs={2}>
-                    <Typography variant="subtitle2">Cost</Typography>
-                    <Typography>{task.cost}</Typography>
+                    <Typography>{prepareType(task.type)}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                     <Typography variant="subtitle2">Min Cost</Typography>

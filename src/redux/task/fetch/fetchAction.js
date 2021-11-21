@@ -33,6 +33,8 @@ const fetchTasks = () => {
 
 const submitTask = ({formData}) => {
     return (dispatch) => {
+
+        console.log('submitTask formData ', formData);
         dispatch(submitTaskRequest(formData));
 
         axios
