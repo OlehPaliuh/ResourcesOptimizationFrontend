@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-const ProjectItemComponent = ({project, index}) => {
+const ProjectItemComponent = ({project}) => {
     return (
         <Box margin={5}>
             <Grid container>
@@ -16,19 +16,6 @@ const ProjectItemComponent = ({project, index}) => {
                     <Typography variant="subtitle2">Final Cost</Typography>
                     <Typography>{project.finalCost}</Typography>
                 </Grid>
-                {/*<Grid item xs={3}>*/}
-                {/*    <Typography variant="subtitle2">Cost</Typography>*/}
-                {/*    <Typography>{task.cost}</Typography>*/}
-                {/*</Grid>*/}
-                {/*<Grid item xs={1}>*/}
-                {/*    <Button*/}
-                {/*        fullWidth*/}
-                {/*        variant="contained"*/}
-                {/*        onClick={deleteTask}*/}
-                {/*        color="secondary">*/}
-                {/*        Remove*/}
-                {/*    </Button>*/}
-                {/*</Grid>*/}
             </Grid>
         </Box>
     )

@@ -57,7 +57,7 @@ const TaskItemComponent = ({task, index}) => {
                         fullWidth
                         variant="contained"
                         onClick={() => navigate(`/tasks/${index}`)}
-                        color="secondary">
+                        color="primary">
                         Details
                     </Button>
                 </Grid>
