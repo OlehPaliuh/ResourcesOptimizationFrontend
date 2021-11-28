@@ -3,10 +3,10 @@ import React from "react";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {LoginComponent} from "./components/login/LoginComponent";
+import {LoginPage} from "./components/login/LoginPage";
 import HomeComponent from "./components/home/HomeComponent";
 import {TaskComponent} from "./components/task/TaskComponent";
-import RegisterComponent from "./components/register/RegisterComponent";
+import RegisterComponent from "./components/register/RegisterPage";
 import ProfileComponent from "./components/profile/ProfileComponent";
 import DashboardComponent from "./components/dashboard/DashboardComponent";
 import {ThemeProvider, useTheme} from '@mui/material/styles';
@@ -27,7 +27,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<HomeComponent/>}/>
                         <Route path="/register" element={<RegisterComponent/>}/>
-                        <Route path="/login" element={<LoginComponent/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
                         <Route
                             path="/dashboard"
                             element={<AuthComponent childComponent={<DashboardComponent/>}/>}

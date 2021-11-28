@@ -5,11 +5,13 @@ import removeTaskReducer from "./task/remove/removeReducer";
 import projectReducer from "./project/fetch/fetchProjectReducer";
 import projectByIdReducer from "./project/fetchSingleProject/fetchProjectByIdReducer";
 import projectOptimizationReducer from "./project/optimization/projectoOtimizationReducer";
+import userInfoReducer from "./user/info/userInfoReducer";
 
 const rootReducer = combineReducers({
     task: taskReducer,
     removedTask: removeTaskReducer,
     currentUser: userReducer,
+    currentUserInfo: userInfoReducer,
     projects: projectReducer,
     project: projectByIdReducer,
     projectOptimization: projectOptimizationReducer

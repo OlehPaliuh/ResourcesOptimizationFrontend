@@ -24,9 +24,17 @@ const SelectTaskComponent = ({checked, index, task, appendTask, removeTask}) => 
     return (
         <MenuItem key={task.id} index={task.id} value={task}>
             <Checkbox checked={checked} onChange={handleCheckboxChanged}/>
-            <ListItemText primary={task.name}/>
-            <ListItemText primary={`Min Cost: ${task.minimumImplementationCost}`}/>
-            <ListItemText primary={`Max Cost: ${task.maximumImplementationCost}`}/>
+            <Grid container>
+                <Grid item xs={6}>
+                    <ListItemText primary={task.name}/>
+                </Grid>
+                <Grid item xs={3}>
+                    <ListItemText primary={`Min Cost: ${task.minimumImplementationCost}`}/>
+                </Grid>
+                <Grid item xs={3}>
+                    <ListItemText primary={`Max Cost: ${task.maximumImplementationCost}`}/>
+                </Grid>
+            </Grid>
         </MenuItem>
     );
 };

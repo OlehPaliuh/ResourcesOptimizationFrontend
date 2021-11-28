@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import {Copyright} from "../login/LoginComponent";
+import {Copyright} from "../login/LoginPage";
 import Chart from "./chart/Chart";
 import Paper from "@mui/material/Paper";
 import Deposits from "./Deposits";

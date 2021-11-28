@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {fetchTasks, submitTask} from "../../redux/task/fetch/fetchAction";
 import {useDispatch, useSelector} from "react-redux";
 import TaskItemComponent from "./TaskItemComponent";
@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import makeStyles from "@mui/styles/makeStyles";
+import {fetchProjects} from "../../redux/project/fetch/fetchProjectAction";
 
 const phaseTypes = [
     'ANALYSIS',
@@ -39,6 +40,15 @@ const TaskComponent = () => {
     const dispatch = useDispatch();
     const {tasks, error, loading} = useSelector((state) => state.task);
     const {control, handleSubmit} = useForm();
+    const [isCreateForm, setIsCreateForm] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchProjects())
+    }, []);
+
+    const handleCreateTaskClicked = () => {
+        setIsCreateForm(!isCreateForm);
+    };
 
     const classes = useStyles();
 
@@ -51,14 +61,10 @@ const TaskComponent = () => {
     };
 
     const onSubmit = formData => {
-        console.log('formData ',formData);
-
         formData = {
             ...formData,
             type: formData.type.toUpperCase()
         };
-
-        console.log('formData modif ',formData);
 
         dispatch(submitTask({formData}));
     };
@@ -70,6 +76,114 @@ const TaskComponent = () => {
                  alignItems="center"
                  justifyContent="center">
                 <Typography variant="h5">Tasks</Typography>
+            </Box>
+
+            <Box pl={2} pr={2}>
+                <Box pb={2}>
+                    <Grid container>
+                        {!isCreateForm ? (
+                            <Grid item xs={4} pb={5}>
+                                <Button variant="contained" color="primary" onClick={handleCreateTaskClicked}>
+                                    Create Task Form
+                                </Button>
+                            </Grid>) : (
+                            <Grid item xs={4}>
+                                <Button variant="contained" color="primary" onClick={handleCreateTaskClicked}>
+                                    Hide Form
+                                </Button>
+                            </Grid>)
+                        }
+                    </Grid>
+                </Box>
+
+                {isCreateForm &&
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container spacing={4}>
+                        <Grid item xs={2}>
+                            <Controller
+                                name="name"
+                                control={control}
+                                defaultValue=""
+                                rules={{required: 'Name required'}}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <TextField
+                                        label="Name"
+                                        value={value}
+                                        onChange={onChange}
+                                        error={!!error}
+                                        helperText={error ? error.message : null}
+                                    />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={2}>
+                            <FormControl name='type' fullWidth>
+                                <InputLabel id="type-label">Type</InputLabel>
+                                <Controller
+                                    name="type"
+                                    control={control}
+                                    defaultValue={phaseTypes[0]}
+                                    rules={{required: 'Type required'}}
+                                    render={({field: {onChange, value}, fieldState: {error}}) => (
+                                        <Select
+                                            label='Type'
+                                            value={value}
+                                            onChange={onChange}
+                                            className={classes.formControl}
+                                            error={!!error}
+                                            helperText={error ? error.message : null}
+                                        >
+                                            {phaseTypes.map(item => <MenuItem key={item}
+                                                                              value={item}>{prepareType(item)}</MenuItem>)}
+                                        </Select>
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item xs={2}>
+                            <Controller
+                                name="minimumImplementationCost"
+                                control={control}
+                                defaultValue=""
+                                rules={{required: 'Cost required'}}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <TextField
+                                        label="Min Cost"
+                                        value={value}
+                                        onChange={onChange}
+                                        error={!!error}
+                                        helperText={error ? error.message : null}
+                                    />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={2}>
+                            <Controller
+                                name="maximumImplementationCost"
+                                control={control}
+                                defaultValue=""
+                                rules={{required: 'Cost required'}}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <TextField
+                                        label="Max Cost"
+                                        value={value}
+                                        onChange={onChange}
+                                        error={!!error}
+                                        helperText={error ? error.message : null}
+                                    />
+                                )}
+                            />
+                        </Grid>
+
+                        <Grid item xs={2}>
+                            <Button type="submit" variant="contained" color="primary"> Submit</Button>
+                        </Grid>
+                    </Grid>
+                </form>
+                }
             </Box>
 
             {loading ? (
@@ -85,133 +199,7 @@ const TaskComponent = () => {
                 </Box>
             )
             }
-
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={4}>
-                    <Grid item xs={2}>
-                        <Controller
-                            name="name"
-                            control={control}
-                            defaultValue=""
-                            rules={{required: 'Name required'}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField
-                                    label="Name"
-                                    value={value}
-                                    onChange={onChange}
-                                    error={!!error}
-                                    helperText={error ? error.message : null}
-                                />
-                            )}
-                        />
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <FormControl name='type' fullWidth>
-                            <InputLabel id="type-label">Type</InputLabel>
-                            <Controller
-                                name="type"
-                                control={control}
-                                defaultValue={phaseTypes[0]}
-                                rules={{required: 'Type required'}}
-                                render={({field: {onChange, value}, fieldState: {error}}) => (
-                                    <Select
-                                        label='Type'
-                                        value={value}
-                                        onChange={onChange}
-                                        className={classes.formControl}
-                                        error={!!error}
-                                        helperText={error ? error.message : null}
-                                    >
-                                        {phaseTypes.map(item => <MenuItem key={item}
-                                                                          value={item}>{prepareType(item)}</MenuItem>)}
-                                    </Select>
-                                )}
-                            />
-                        </FormControl>
-                    </Grid>
-
-                    {/*<Grid item xs={2}>*/}
-                    {/*    <Controller*/}
-                    {/*        name="type"*/}
-                    {/*        control={control}*/}
-                    {/*        defaultValue={prepareType(phaseTypes[0])}*/}
-                    {/*        rules={{required: 'Type required'}}*/}
-                    {/*        render={({field: {onChange, value}, fieldState: {error}}) => (*/}
-                    {/*            <Select*/}
-                    {/*                value={value}*/}
-                    {/*                onChange={onChange}*/}
-                    {/*                className={classes.formControl}*/}
-                    {/*                error={!!error}*/}
-                    {/*                helperText={error ? error.message : null}*/}
-                    {/*            >*/}
-                    {/*                {phaseTypes.map(item => <MenuItem key={item}*/}
-                    {/*                                                  value={item}>{prepareType(item)}</MenuItem>)}*/}
-                    {/*            </Select>*/}
-                    {/*        )}*/}
-                    {/*    />*/}
-                    {/*</Grid>*/}
-
-                    {/*<Grid item xs={2}>*/}
-                    {/*    <Controller*/}
-                    {/*        name="type"*/}
-                    {/*        control={control}*/}
-                    {/*        defaultValue=""*/}
-                    {/*        rules={{required: 'Type required'}}*/}
-                    {/*        render={({field: {onChange, value}, fieldState: {error}}) => (*/}
-                    {/*            <TextField*/}
-                    {/*                label="Type"*/}
-                    {/*                value={value}*/}
-                    {/*                onChange={onChange}*/}
-                    {/*                error={!!error}*/}
-                    {/*                helperText={error ? error.message : null}*/}
-                    {/*            />*/}
-                    {/*        )}*/}
-                    {/*    />*/}
-                    {/*</Grid>*/}
-
-                    <Grid item xs={2}>
-                        <Controller
-                            name="minimumImplementationCost"
-                            control={control}
-                            defaultValue=""
-                            rules={{required: 'Cost required'}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField
-                                    label="Min Cost"
-                                    value={value}
-                                    onChange={onChange}
-                                    error={!!error}
-                                    helperText={error ? error.message : null}
-                                />
-                            )}
-                        />
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <Controller
-                            name="maximumImplementationCost"
-                            control={control}
-                            defaultValue=""
-                            rules={{required: 'Cost required'}}
-                            render={({field: {onChange, value}, fieldState: {error}}) => (
-                                <TextField
-                                    label="Max Cost"
-                                    value={value}
-                                    onChange={onChange}
-                                    error={!!error}
-                                    helperText={error ? error.message : null}
-                                />
-                            )}
-                        />
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <Button type="submit" variant="contained" color="primary"> Submit</Button>
-                    </Grid>
-                </Grid>
-            </form>
         </Box>
     );
 };
-export {TaskComponent, prepareType}
+export {TaskComponent, prepareType, phaseTypes}

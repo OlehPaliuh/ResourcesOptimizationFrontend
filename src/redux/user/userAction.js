@@ -21,6 +21,8 @@ const authenticate = ({formData}) => {
 
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
+                localStorage.setItem('currentUserId', response.data.id);
+                localStorage.setItem('currentUserName', response.data.username);
 
                 dispatch(authenticateSuccess(currentUser));
             })

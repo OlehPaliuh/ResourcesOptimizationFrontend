@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
@@ -13,17 +13,37 @@ import {
     optimizeProjectResources
 } from "../../../redux/project/optimization/projectOptimizationAction";
 import OptimizationResultComponent from "../../../components/project/optimization/OptimizationResultComponent";
+import {ProjectChart} from "./ProjectChart";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import {prepareType} from "../../../components/task/TaskComponent";
+import makeStyles from "@mui/styles/makeStyles";
+import {PhaseChart} from "./PhaseChart";
+
+const phaseTypes = [
+    'ANALYSIS',
+    'DESIGN',
+    'DEVELOPMENT',
+    'TESTING',
+    'DEPLOYMENT',
+    'MAINTENANCE'
+];
+
+const useStyles = makeStyles(() => ({
+    formControl: {
+        minWidth: 120,
+    },
+}));
 
 const ProjectDetailsPage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showTasks, setShowTasks] = useState(false);
+    const [graphPhase, setGraphPhase] = useState(phaseTypes[0]);
     const {project, error, loading} = useSelector((state) => state.project);
     const projectOptimizationData = useSelector((state) => state.projectOptimization);
-
-    console.log('index ', id);
-    console.log('project ', project);
-    console.log('projectOptimizationData ', projectOptimizationData);
+    const classes = useStyles();
 
     useEffect(() => {
         dispatch(fetchProjectById({projectId: id}));
@@ -32,6 +52,14 @@ const ProjectDetailsPage = () => {
 
     const handleOptimizeResources = async () => {
         await dispatch(optimizeProjectResources({projectId: id}));
+    };
+
+    const handleShowTasks = () => {
+        setShowTasks(!showTasks);
+    };
+
+    const handleGraphTypeChanged = (event) => {
+        setGraphPhase(event.target.value);
     };
 
     return (
@@ -45,8 +73,6 @@ const ProjectDetailsPage = () => {
             <Grid container>
                 <Grid item xs>
                     {error && <Alert severity="error">{error.message}</Alert>}
-                    {/*{projectOptimizationData?.error &&*/}
-                    {/*<Alert severity="error">{projectOptimizationData.error.message}</Alert>}*/}
                 </Grid>
             </Grid>
             {project &&
@@ -73,13 +99,44 @@ const ProjectDetailsPage = () => {
                 </Grid>
 
                 <Grid mt={4}>
-                    <TasksTableList tasks={project.tasks}/>
+                    <Button variant="contained"
+                            color="primary"
+                            onClick={handleShowTasks}>{showTasks ? 'Hide tasks' : 'Show tasks'}</Button>
+                    {showTasks &&
+                    <Grid pt={4} pb={4}>
+                        <TasksTableList tasks={project.tasks}/>
+                    </Grid>
+                    }
                 </Grid>
             </Grid>
             }
 
             {projectOptimizationData?.projectOptimization && !projectOptimizationData.loading &&
             <OptimizationResultComponent projectOptimization={projectOptimizationData.projectOptimization}/>
+            }
+
+            {projectOptimizationData?.projectOptimization && !projectOptimizationData.loading &&
+            <ProjectChart optimizationData={projectOptimizationData.projectOptimization}/>
+            }
+
+
+            {projectOptimizationData?.projectOptimization && !projectOptimizationData.loading &&
+            <Box pt={2} pb={2}>
+                <Box pt={2} pb={2}>
+                    <Select
+                        className={classes.formControl}
+                        onChange={handleGraphTypeChanged}
+                        defaultValue={graphPhase}
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                    >
+                        {phaseTypes.map(item => <MenuItem key={item}
+                                                          value={item}>{prepareType(item)}</MenuItem>)}
+                    </Select>
+                </Box>
+
+                <PhaseChart optimizationData={projectOptimizationData.projectOptimization} graphPhase={graphPhase}/>
+            </Box>
             }
 
             <Grid pt={4} pb={4}>

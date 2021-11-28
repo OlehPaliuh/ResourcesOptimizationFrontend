@@ -39,7 +39,7 @@ const Copyright = props => {
     );
 };
 
-const LoginComponent = () => {
+const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {control, handleSubmit} = useForm();
@@ -145,4 +145,4 @@ const LoginComponent = () => {
     );
 };
 
-export {LoginComponent , Copyright};
+export {LoginPage , Copyright};

@@ -16,6 +16,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {prepareType} from "../../task/TaskComponent";
 
+const reducer = (accumulator, curr) => accumulator + curr;
+
+const getSumOptimizedTasks = phaseOptimizationItem => Math.round((phaseOptimizationItem?.optimizationItems?.map(item => item.value).reduce(reducer, 0)) * 100) / 100;
+
 const OptimizationResultRow = (props) => {
     const {phaseOptimizationItem} = props;
     const [open, setOpen] = React.useState(false);
@@ -38,13 +42,14 @@ const OptimizationResultRow = (props) => {
                 <TableCell align="right">{phaseOptimizationItem.minimumCost}</TableCell>
                 <TableCell align="right">{phaseOptimizationItem.maximumCost}</TableCell>
                 <TableCell align="right">{phaseOptimizationItem.value}</TableCell>
+                <TableCell align="right">{getSumOptimizedTasks(phaseOptimizationItem)}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{margin: 1}}>
                             <Typography variant="h6" gutterBottom component="div">
-                                History
+                                Tasks Optimization
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
@@ -99,6 +104,7 @@ const OptimizationResultComponent = ({projectOptimization}) => {
                                     <TableCell align="right">Min value</TableCell>
                                     <TableCell align="right">Max Value</TableCell>
                                     <TableCell align="right">Optimized Value</TableCell>
+                                    <TableCell align="right">Sum Optimized Tasks</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

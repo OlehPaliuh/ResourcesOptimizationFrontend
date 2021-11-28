@@ -4,7 +4,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../../redux";
 import {useNavigate} from "react-router-dom";
-import {Copyright} from "../login/LoginComponent";
+import {Copyright} from "../login/LoginPage";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
