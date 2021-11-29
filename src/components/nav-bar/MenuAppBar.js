@@ -83,7 +83,6 @@ const MenuAppBar = () => {
                                     onClose={handleClose}
                                 >
                                     <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
                                     <MenuItem onClick={logOut}>Sign out</MenuItem>
                                 </Menu>
                             </div>

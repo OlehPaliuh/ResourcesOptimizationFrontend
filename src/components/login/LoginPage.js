@@ -30,8 +30,8 @@ const Copyright = props => {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="/">
+                Resources Optimization
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -72,7 +72,9 @@ const LoginPage = () => {
         >
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <Typography className={classes.typo} variant="h5">Sign in</Typography>
+                <Grid pb={2} pt={3}>
+                    <Typography className={classes.typo} variant="h5">Sign in</Typography>
+                </Grid>
 
                 <Grid container>
                     <Grid item xs>
@@ -80,46 +82,50 @@ const LoginPage = () => {
                     </Grid>
                 </Grid>
 
-                <Controller
-                    name="username"
-                    control={control}
-                    defaultValue=""
-                    rules={{required: 'Username required'}}
-                    render={({field: {onChange, value}, fieldState: {error}}) => (
-                        <TextField
-                            label="Username"
-                            fullWidth
-                            required
-                            value={value}
-                            onChange={onChange}
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                        />
-                    )}
-                />
-                <Controller
-                    name="password"
-                    control={control}
-                    defaultValue=""
-                    rules={{required: 'Type required'}}
-                    render={({field: {onChange, value}, fieldState: {error}}) => (
-                        <TextField
-                            label="Password"
-                            fullWidth
-                            required
-                            value={value}
-                            onChange={onChange}
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                        />
-                    )}
-                />
-
+                <Box pb={1}>
+                    <Controller
+                        name="username"
+                        control={control}
+                        defaultValue=""
+                        rules={{required: 'Username required'}}
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <TextField
+                                label="Username"
+                                fullWidth
+                                required
+                                value={value}
+                                onChange={onChange}
+                                error={!!error}
+                                helperText={error ? error.message : null}
+                            />
+                        )}
+                    />
+                </Box>
+                <Grid pb={1}>
+                    <Controller
+                        name="password"
+                        control={control}
+                        defaultValue=""
+                        rules={{required: 'Type required'}}
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <TextField
+                                label="Password"
+                                fullWidth
+                                required
+                                value={value}
+                                onChange={onChange}
+                                error={!!error}
+                                helperText={error ? error.message : null}
+                            />
+                        )}
+                    />
+                </Grid>
 
                 <FormControlLabel
                     control={<Checkbox value="remember" color="primary"/>}
                     label="Remember me"
                 />
+
                 <Button
                     type="submit"
                     fullWidth
@@ -127,12 +133,7 @@ const LoginPage = () => {
                     color="primary">
                     Sign In
                 </Button>
-                <Grid container>
-                    <Grid item xs>
-                        <Link href="#" variant="body2">
-                            Forgot password?
-                        </Link>
-                    </Grid>
+                <Grid container padding={1}>
                     <Grid item>
                         <Link href="/register" variant="body2">
                             {"Don't have an account? Sign Up"}
@@ -145,4 +146,4 @@ const LoginPage = () => {
     );
 };
 
-export {LoginPage , Copyright};
+export {LoginPage, Copyright};

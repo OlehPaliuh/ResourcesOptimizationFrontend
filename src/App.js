@@ -16,6 +16,8 @@ import TaskDetailsComponent from "./components/task/TaskDetails";
 import AuthComponent from "./components/AuthComponent";
 import SupportPage from "./pages/support/SupportPage";
 import ProjectEditPage from "./pages/project/edit/ProjectEditPage";
+import AdminProjectPage from "./pages/project/admin/AdminProjectPage";
+import AdminUserPage from "./pages/users/AdminUserPage";
 
 const App = () => {
     const theme = useTheme();
@@ -43,6 +45,14 @@ const App = () => {
                         <Route
                             path="/profile"
                             element={<AuthComponent childComponent={<ProfileComponent/>}/>}
+                        />
+                        <Route
+                            path="/admin/projects"
+                            element={<AuthComponent childComponent={<AdminProjectPage/>}/>}
+                        />
+                        <Route
+                            path="/admin/users"
+                            element={<AuthComponent childComponent={<AdminUserPage/>}/>}
                         />
                         <Route
                             path="/projects"

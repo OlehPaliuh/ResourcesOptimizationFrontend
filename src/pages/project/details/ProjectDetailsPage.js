@@ -43,6 +43,7 @@ const ProjectDetailsPage = () => {
     const [graphPhase, setGraphPhase] = useState(phaseTypes[0]);
     const {project, error, loading} = useSelector((state) => state.project);
     const projectOptimizationData = useSelector((state) => state.projectOptimization);
+    const isProjectOwner = project?.owner.id == localStorage.getItem('currentUserId');
     const classes = useStyles();
 
     useEffect(() => {
@@ -139,12 +140,13 @@ const ProjectDetailsPage = () => {
             </Box>
             }
 
+            {isProjectOwner &&
             <Grid pt={4} pb={4}>
                 <Button variant="contained"
                         color="primary"
                         onClick={handleOptimizeResources}>{!projectOptimizationData ? 'Optimize Resources' : 'Rebuild Optimization'}</Button>
             </Grid>
-
+            }
         </Box>
     );
 };
